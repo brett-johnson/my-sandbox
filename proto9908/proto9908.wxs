@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Name="Xenstore Spoofer Installer" Id="17440667-DE91-467E-8709-40244220C8C7" UpgradeCode="C17B778F-86A1-4109-B57C-9C8BD763D4BD"
+           Manufacturer="Rackspace, Inc." Version="1.0.0.0" Language="1033">
+    <Package Id="*" Manufacturer="Rackspace, Inc." InstallerVersion="200" Languages="1033" Compressed="yes" />
+    <Media Id="1" Cabinet="XenstoreSpoof.cab" EmbedCab="yes" />
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder" Name="PFiles">
+        <Directory Id="CitrixFolder" Name="Citrix">
+          <Directory Id="INSTALLDIR" Name="XenTools">
+            <Component Id="XenstoreComponent" Guid="47082FD9-2513-4BF5-967F-E25366445ADC">
+              <File Id="xenstore_client.exe" Name="xenstore_client.exe" Source="..\x64\Release\xenstore.exe" Vital="yes" KeyPath="yes" DiskId="1"/>
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+    <Feature Id="ProductFeature" Title="XenstoreSpooferFeature" Level="1">
+      <ComponentRef Id="XenstoreComponent" />
+    </Feature>
+  </Product>
+</Wix>

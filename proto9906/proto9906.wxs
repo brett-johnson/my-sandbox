@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Name="Proto Service Installer" Id="0C50BC8C-4FCE-49F8-A650-B2082977D8B6"
+    UpgradeCode="115A0213-7FED-4CA4-A55C-201593B80953" Manufacturer="Proto, Inc."
+	Version="1.0.0.0" Language="1033">
+    <Package Id="*" Manufacturer="Proto, Inc." InstallerVersion="200" Languages="1033" Compressed="yes" />
+    <Media Id="1" Cabinet="Proto.cab" EmbedCab="yes" />
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder" Name="PFiles">
+        <Directory Id="INSTALLDIR" Name="Protobar">
+          <Component Id="ProtoServiceComponent" Guid="92FB6354-69CE-4D11-8A62-63D8798F06E3">
+            <File Id="proto9906.exe" Name="proto9906.exe" Source="bin\x64\Debug\proto9906.exe" Vital="yes" KeyPath="yes" DiskId="1"/>
+            <ServiceInstall
+              Id="ProtoService"
+              Type="ownProcess"
+              Vital="yes"
+              Name="ProtoService"
+              DisplayName="Prototype Service [ProductVersion]"
+              Description="Prototype Service Description [ProductVersion]"
+              Start="auto"
+              Account="NT AUTHORITY\SYSTEM"
+              ErrorControl="ignore"
+              Interactive="no"
+              >
+            </ServiceInstall>
+            <ServiceControl Id="StartService" Start="install" Stop="both" Remove="uninstall" Name="ProtoService" Wait="yes" />
+            <RegistryKey Root="HKLM" Key="SOFTWARE\Rackspace\CloudBackup" Action="create">
+              <RegistryValue Type="string" Name="Folder" Action="write" Value="[INSTALLDIR]" />
+              <RegistryValue Type="string" Name="Start" Action="write" Value="2013-05-01 03:00:00" />
+              <RegistryValue Type="string" Name="Last" Action="write" Value="2000-01-01 03:00:00" />
+            </RegistryKey>
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+    <Feature Id="ProductFeature" Title="ProtoServiceFeature" Level="1">
+      <ComponentRef Id="ProtoServiceComponent" />
+    </Feature>
+  </Product>
+</Wix>

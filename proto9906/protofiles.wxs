@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+
+<?if $(var.Platform) = "x64"?>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder" Name="PFiles">
+        <Directory Id="INSTALLDIR" Name="Protobar">
+          <Component Id="ProtoServiceComponent" Guid="92FB6354-69CE-4D11-8A62-63D8798F06E3">
+            <File Id="proto9906.exe" Name="proto9906.exe"
+			  Source="bin\x64\Debug\proto9906.exe" Vital="yes" KeyPath="yes" DiskId="1"/>
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+<?else?>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder" Name="PFiles">
+        <Directory Id="INSTALLDIR" Name="Protobar">
+          <Component Id="ProtoServiceComponent" Guid="92FB6354-69CE-4D11-8A62-63D8798F06E3">
+            <File Id="proto9906.exe" Name="proto9906.exe"
+			  Source="bin\x64\Debug\proto9906.exe" Vital="yes" KeyPath="yes" DiskId="1"/>
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+<?endif?>
+
+  </Fragment>
+</Wix>

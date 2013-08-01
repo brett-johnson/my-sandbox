@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Name="Proto Service Installer" Id="0C50BC8C-4FCE-49F8-A650-B2082977D8B6" UpgradeCode="115A0213-7FED-4CA4-A55C-201593B80953"
+           Manufacturer="Proto, Inc." Version="1.0.0.0" Language="1033">
+    <Package Id="*" Manufacturer="Proto, Inc." InstallerVersion="200" Languages="1033" Compressed="yes" />
+    <Media Id="1" Cabinet="Proto.1.0.0.0.cab" EmbedCab="yes" />
+   <Feature Id="ProductFeature" Title="ProtoServiceFeature" Level="1">
+      <ComponentRef Id="ProtoServiceComponent" />
+    </Feature>
+
+  </Product>
+</Wix>

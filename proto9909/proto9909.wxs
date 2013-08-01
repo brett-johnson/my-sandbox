@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Name="Driveclient Service Installer" Id="37E833C1-538F-4B7B-BBCE-5890F1B1956F" UpgradeCode="0C9B93D8-D15F-4872-AA85-56C08D15E4B9"
+           Manufacturer="Rackspace, Inc." Version="1.6.5959.0" Language="1033">
+    <Package Id="*" Manufacturer="Rackspace, Inc." InstallerVersion="200" Languages="1033" Compressed="yes" />
+    <Media Id="1" Cabinet="DriveClient.1.0.0.0.cab" EmbedCab="yes" />
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder" Name="PFiles">
+        <Directory Id="INSTALLDIR" Name="Driveclient">
+          <Component Id="UpgradeRcbuServiceComponent" Guid="5627F8D3-9590-4e4a-B8CB-56264B473F46">
+            <File Id="upgrade.exe" Name="upgrade.exe" Source="bin\x64\Release\proto9909.exe" Vital="yes" KeyPath="yes" DiskId="1"/>
+            <ServiceInstall
+              Id="UpgradeDriveclientSvc"
+              Type="ownProcess"
+              Vital="yes"
+              Name="UpgradeRcbuSvc"
+              DisplayName="Driveclient Upgrade Service"
+              Description="Driveclient Upgrade Service description version [ProductVersion]"
+              Start="auto"
+              Account="NT AUTHORITY\SYSTEM"
+              ErrorControl="ignore"
+              Interactive="no"
+              >
+            </ServiceInstall>
+            <ServiceControl Id="StartService" Start="install" Stop="both" Remove="uninstall" Name="UpgradeRcbuSvc" Wait="yes" />
+            <RegistryKey Root="HKLM" Key="SOFTWARE\Rackspace\CloudBackup" Action="create">
+              <RegistryValue Type="string" Name="Folder" Action="write" Value="[INSTALLDIR]" />
+              <!-- TODO: SET START TIME IN CUSTOM ACTION? Use format: YYYY-MM-DD HH:MM:SS -->
+              <RegistryValue Type="string" Name="Start" Action="write" Value="2013-05-01 03:00:00" />
+              <RegistryValue Type="string" Name="Build Time" Action="write" Value="[Date] [Time]" />
+              <RegistryValue Type="string" Name="Product Version" Action="write" Value="[ProductVersion]" />
+            </RegistryKey>
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+    <Feature Id="ProductFeature" Title="DriveclientServiceFeature" Level="1">
+      <ComponentRef Id="UpgradeRcbuServiceComponent" />
+    </Feature>
+  </Product>
+</Wix>
